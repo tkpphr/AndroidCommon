@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="com.tkpphr.android.common.util.SpannableFactory"/>
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary">
+        </android.support.v7.widget.Toolbar>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{SpannableFactory.createBackgroundSpan(`Spannable Text`,@android:color/holo_blue_light,``,`tex`,`n`)}"/>
+        <TextView
+            android:id="@+id/display_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_image_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Async Image Task Demo"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+             />
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_sound_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sound Demo"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"/>
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_vibration_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vibrate"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"/>
+    </LinearLayout>
+</layout>
