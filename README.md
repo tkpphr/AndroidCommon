@@ -27,6 +27,7 @@ allprojects {
 dependencies {
     ...
     implementation 'com.tkpphr.android:common:1.0.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
 }
 ```
 
@@ -49,6 +50,12 @@ or
     <groupId>com.tkpphr.android</groupId>
     <artifactId>common</artifactId>
     <version>1.0.0</version>
+    <type>aar</type>
+  </dependency>
+  <dependency>
+    <groupId>com.android.support</groupId>
+    <artifactId>appcompat-v7</artifactId>
+    <version>27.1.1</version>
     <type>aar</type>
   </dependency>
 </dependencies>
