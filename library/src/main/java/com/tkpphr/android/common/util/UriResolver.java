@@ -33,12 +33,16 @@ public class UriResolver {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if(DocumentsContract.isDocumentUri(context, uri)){
                 String documentId=DocumentsContract.getDocumentId(uri);
-                if("com.android.externalstorage.documents".equals(uri.getAuthority())){
-                    return getDocumentExternalStorage(documentId);
-                }else if("com.android.providers.downloads.documents".equals(uri.getAuthority())){
-                    return getDocumentDownload(context,documentId);
-                }else if("com.android.providers.media.documents".equals(uri.getAuthority())){
-                    return getDocumentMedia(context,documentId);
+                if(documentId.startsWith("raw:")) {
+                    return documentId.replaceFirst("raw:","");
+                }else {
+                    if ("com.android.externalstorage.documents".equals(uri.getAuthority())) {
+                        return getDocumentExternalStorage(documentId);
+                    } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
+                        return getDocumentDownload(context, documentId);
+                    } else if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
+                        return getDocumentMedia(context, documentId);
+                    }
                 }
             }
         }
@@ -53,6 +57,10 @@ public class UriResolver {
     @Nullable
     private static String getDocumentExternalStorage(String id){
         String[] type=id.split(":");
+        if(type.length == 0){
+            return null;
+        }
+
         if("primary".equalsIgnoreCase(type[0])){
             return Environment.getExternalStorageDirectory()+"/"+type[1];
         }else{
@@ -62,15 +70,22 @@ public class UriResolver {
 
     @Nullable
     private static String getDocumentDownload(Context context,String id){
-        Uri uri= ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-
-        return getDataColumn(context,uri,null,null);
+        try {
+            Uri uri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+            return getDataColumn(context,uri,null,null);
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Nullable
     private static String getDocumentMedia(Context context,String id){
-        Uri contentUri=null;
         String[] type=id.split(":");
+        if(type.length == 0){
+            return null;
+        }
+        Uri contentUri=null;
         if("image".equals(type[0])){
             contentUri= MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         }else if("audio".equals(type[0])){
